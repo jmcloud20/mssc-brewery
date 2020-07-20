@@ -1,4 +1,4 @@
-package org.springguru.msscbrewery.web.controller;
+package org.springguru.msscbrewery.services;
 
 import org.springguru.msscbrewery.web.model.CustomerDto;
 

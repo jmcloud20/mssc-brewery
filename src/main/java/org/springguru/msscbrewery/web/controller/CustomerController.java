@@ -4,8 +4,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springguru.msscbrewery.services.CustomerService;
 import org.springguru.msscbrewery.web.model.CustomerDto;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -23,7 +25,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity handlePost(@RequestBody CustomerDto customerDTO){
+    public ResponseEntity handlePost(@Valid @RequestBody CustomerDto customerDTO){
         CustomerDto savedDto = customerService.saveNewCustomer(customerDTO);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/v1/customer"+savedDto.getId().toString());
@@ -31,7 +33,7 @@ public class CustomerController {
     }
     @PutMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void handleUpdate(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDTO){
+    public void handleUpdate(@PathVariable("customerId") UUID customerId, @Valid @RequestBody CustomerDto customerDTO){
         customerService.updateCustomer(customerId, customerDTO);
     }
     @DeleteMapping("/{customerId}")
@@ -39,4 +41,5 @@ public class CustomerController {
     public void deleteCustomer(@PathVariable("customerId") UUID customerId){
         customerService.deleteCustomer(customerId);
     }
+
 }
